@@ -5,22 +5,19 @@ use anchor_lang::prelude::*;
 declare_id!("CABVoybzrbAJSv7QhQd6GXNGKxDMRjw9niqFzizhk6uk");
 
 #[program]
-pub mod owner {
+pub mod owner_program {
     use super::*;
     pub fn initialize(_ctx: Context<InitializeLever>) -> Result<()> {
         Ok(())
     }
 
-    pub fn switch_power(ctx: Context<SetPowerStatus>, isAgreed: bool) -> Result<()> {
+    pub fn agree_contract(ctx: Context<SetOwnerStatus>, is_agreed: bool) -> Result<()> {
+        if ctx.accounts.agree.is_on == is_agreed {
+            return Err(ErrorCode::AlreadyAgreed.into());
+        }
+
         let agree = &mut ctx.accounts.agree;
         agree.is_on = !agree.is_on;
-
-        msg!("{} is pulling the agree switch!", &isAgreed);
-
-        match agree.is_on {
-            true => msg!("The agree is now on."),
-            false => msg!("The agree is now off!"),
-        };
 
         Ok(())
     }
@@ -36,9 +33,15 @@ pub struct InitializeLever<'info> {
 }
 
 #[derive(Accounts)]
-pub struct SetPowerStatus<'info> {
+pub struct SetOwnerStatus<'info> {
     #[account(mut)]
     pub agree: Account<'info, PowerStatus>,
+}
+
+#[error_code]
+pub enum ErrorCode {
+    #[msg("Already agreed!")]
+    AlreadyAgreed,
 }
 
 #[account]
