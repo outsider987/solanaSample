@@ -5,7 +5,7 @@ use anchor_lang::prelude::*;
 declare_id!("CABVoybzrbAJSv7QhQd6GXNGKxDMRjw9niqFzizhk6uk");
 
 #[program]
-pub mod owner_program {
+pub mod owner {
     use super::*;
     pub fn initialize(_ctx: Context<InitializeLever>) -> Result<()> {
         Ok(())

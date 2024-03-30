@@ -1,6 +1,6 @@
 import * as anchor from "@coral-xyz/anchor";
 import { Program } from "@coral-xyz/anchor";
-import { ContractCreatorProgram } from "../target/types/contract_creator_program";
+import { ContractCreator } from "../target/types/contract_creator";
 
 describe("create Contract", () => {
   // Configure the client to use the local cluster.
@@ -11,7 +11,7 @@ describe("create Contract", () => {
   const wallet = provider.wallet;
   const connection = provider.connection;
 
-  const program = anchor.workspace.HelloWorld as Program<ContractCreatorProgram>;
+  const program = anchor.workspace.HelloWorld as Program<ContractCreator>;
 
   it("Is initialized!", async () => {
     // Add your test here.
