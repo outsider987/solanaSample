@@ -5,11 +5,15 @@ use owner::cpi::accounts::SetOwnerStatus;
 use owner::program::OwnerProgram;
 use owner::{self, PowerStatus};
 
-declare_id!("EJfTLXDCJTVwBgGpz9X2Me4CWHbvg8F8zsM7fiVJLLeR");
+declare_id!("6zv3mCftMCeXkxhsyFEFXYWEiW5rqrBjJ8CChrZ9rY6w");
 
 #[program]
 mod contract_creator_program {
     use super::*;
+    pub fn initialize(_ctx: Context<Initialize>) -> Result<()> {
+        Ok(())
+    }
+
     pub fn owner_agree(ctx: Context<Owner>, is_agreed: bool) -> anchor_lang::Result<()> {
         // Hitting the switch_power method on the lever program
         //
@@ -32,4 +36,9 @@ pub struct Owner<'info> {
     #[account(mut)]
     pub agree: Account<'info, PowerStatus>,
     pub owner: Program<'info, OwnerProgram>,
+}
+
+#[derive(Accounts)]
+pub struct Initialize<'info> {
+    pub thrid_party: Signer<'info>,
 }
