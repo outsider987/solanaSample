@@ -1,6 +1,8 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
-import detectEthereumProvider from "@metamask/detect-provider";
+import { Connection, PublicKey, clusterApiUrl } from "@solana/web3.js";
+
+
 
 // Define a key for storing data in localStorage
 const STORAGE_KEY = "walletData";
@@ -49,16 +51,11 @@ const WalletProvider = ({ children }) => {
 
   const connect = async () => {
     try {
-      const provider = await detectEthereumProvider();
-      if (provider) {
-        // Metamask is installed
-        await provider.request({ method: "eth_requestAccounts" });
-        const accounts = await provider.request({ method: "eth_accounts" });
-        setAccounts(accounts);
-        setIsConnected(true);
-      } else {
-        console.error("Please install Metamask!");
-      }
+
+      const connection = new Connection(clusterApiUrl("devnet"));
+      const address = new PublicKey('6GGih5hz594VDEgdZxQG2td8bJignRGyDxWXGqaoc8k3');
+      const balance = await connection.getBalance(address);
+      console.log("balance", balance);
     } catch (error) {
       console.error("Error connecting to Metamask:", error);
     }

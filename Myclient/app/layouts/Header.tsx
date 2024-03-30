@@ -1,20 +1,15 @@
 "use client";
 
-import { useState } from "react";
-import Button from "../components/Button";
-import detectEthereumProvider from "@metamask/detect-provider";
-import { useWalletContext } from "../store/Wallet";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 
 const Hedaer = () => {
-  const { connect, accounts } = useWalletContext();
-
+  const { publicKey, sendTransaction } = useWallet();
   return (
-    <header className="flex justify-between bg-[#0d131c] bg-opacity-70">
-      <div></div>
+    <header className="flex justify-between bg-[#0d131c] items-center px-4 bg-opacity-70">
+      <div>KEY: {publicKey && publicKey.toString()}</div>
       <div>
-        <Button mode="primaryContainedShadow" onClick={connect}>
-          Connect
-        </Button>
+        <WalletMultiButton />
       </div>
     </header>
   );

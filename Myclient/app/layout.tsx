@@ -3,7 +3,9 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Hedaer from "./layouts/Header";
 import RootContextProvider from "./store";
+
 import clsx from "clsx";
+import SolanaWalletContextProvider from "./store/Solnan";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,12 +21,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <RootContextProvider>
-        <body className={clsx(inter.className, " ")}>
-          <Hedaer />
-          <div className="flex w-full">{children}</div>
-        </body>
-      </RootContextProvider>
+      <SolanaWalletContextProvider>
+        <RootContextProvider>
+          <body className={clsx(inter.className, " ")}>
+            <Hedaer />
+            <div className="flex w-full">{children}</div>
+          </body>
+        </RootContextProvider>
+      </SolanaWalletContextProvider>
     </html>
   );
 }

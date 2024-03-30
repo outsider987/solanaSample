@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Mortage from "@/app/components/Mortage";
+import Mortage from "@/app/components/Solana/Mortage";
 
 export default function Home() {
   return (
